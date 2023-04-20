@@ -1,5 +1,8 @@
 package com.ecommerce.controller;
 
+import java.util.List;
+
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,11 +13,11 @@ import com.ecommerce.service.categoryService;
 
 @RestController
 @RequestMapping("/category")
-public class CatergoryContoller {
+public class CategoryContoller {
 
     private final categoryService categoryService;
     
-    public CatergoryContoller(com.ecommerce.service.categoryService categoryService) {
+    public CategoryContoller(com.ecommerce.service.categoryService categoryService) {
         this.categoryService = categoryService;
     }
 
@@ -23,5 +26,11 @@ public class CatergoryContoller {
         categoryService.createCategory(category);
         
         return "success";
+    }
+
+    @GetMapping("/list")
+    public List<Category> getCategories() {
+        
+        return categoryService.getCategories();
     }
 }

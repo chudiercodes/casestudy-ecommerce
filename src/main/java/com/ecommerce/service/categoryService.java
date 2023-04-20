@@ -1,5 +1,7 @@
 package com.ecommerce.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.ecommerce.dao.categoryRepo;
@@ -16,6 +18,10 @@ public class categoryService {
     
     public void createCategory(Category category) {
         categoryRepo.save(category);
+    }
+
+    public List<Category> getCategories() {
+        return categoryRepo.findAll();
     }
 
 }
