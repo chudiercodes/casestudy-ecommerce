@@ -1,7 +1,5 @@
 package com.ecommerce.dao;
 
-import javax.persistence.criteria.CriteriaBuilder.In;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

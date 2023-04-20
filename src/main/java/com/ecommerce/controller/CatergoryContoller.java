@@ -22,6 +22,6 @@ public class CatergoryContoller {
     public String createCategory(@RequestBody Category category) {
         categoryService.createCategory(category);
         
-        return null;
+        return "success";
     }
 }
