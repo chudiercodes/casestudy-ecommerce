@@ -38,7 +38,11 @@ public class ProductService {
         productDto.setImageUrl(product.getImageUrl());
         productDto.setName(product.getName());
         productDto.setPrice(product.getPrice());
-        productDto.setCategoryId(product.getCategory().getCategoryId());
+
+        if (product.getCategory() != null) {
+            productDto.setCategoryId(product.getCategory().getCategoryId());
+        }
+
         productDto.setId(product.getProductId());
 
         return productDto;
