@@ -16,8 +16,6 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "products")
-@AllArgsConstructor
-@NoArgsConstructor
 public @Data class Product {
 
     @Id
@@ -34,10 +32,23 @@ public @Data class Product {
     @JoinColumn(name = "categoryId")
     Category category;
 
+    public Product() {
+    }
+
+    public Product(int productId, String name, String imageUrl, double price, String description, Category category) {
+        this.productId = productId;
+        this.name = name;
+        this.imageUrl = imageUrl;
+        this.price = price;
+        this.description = description;
+        this.category = category;
+    }
+
     public Product(String name, String imageUrl, double price, String description) {
         this.name = name;
         this.imageUrl = imageUrl;
         this.price = price;
         this.description = description;
     }
+
 } 

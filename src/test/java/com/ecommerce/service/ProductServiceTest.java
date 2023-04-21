@@ -51,4 +51,16 @@ public class ProductServiceTest {
         assertEquals("Product 1", result.getName());
         assertEquals(9.99, result.getPrice(), 0.001);
     }
+
+    @Test
+    public void testUpdateProduct() {
+        int productId = 1;
+        ProductDto productDto = new ProductDto(productId, "Product 1", "http://example.com/image1.jpg", 9.99, "Product 1 description", 1);
+        Product product = new Product("Product 1", "http://example.com/image1.jpg", 9.99, "Product 1 description");
+        Mockito.when(productRepository.findById(productId)).thenReturn(Optional.of(product));
+
+        productService.updateProduct(productDto, productId);
+
+        Mockito.verify(productRepository, Mockito.times(1)).save(product);
+    }
 }
