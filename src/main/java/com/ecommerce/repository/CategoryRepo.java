@@ -1,4 +1,4 @@
-package com.ecommerce.dao;
+package com.ecommerce.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.ecommerce.model.Category;
 
 @Repository
-public interface categoryRepo extends JpaRepository<Category, Integer>{
+public interface CategoryRepo extends JpaRepository<Category, Integer> {
     
 }
