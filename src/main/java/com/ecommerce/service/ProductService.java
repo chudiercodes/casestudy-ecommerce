@@ -34,17 +34,15 @@ public class ProductService {
     public ProductDto getProductDto(Product product) {
         ProductDto productDto = new ProductDto();
 
+        productDto.setId(product.getProductId());
         productDto.setDescription(product.getDescription());
         productDto.setImageUrl(product.getImageUrl());
         productDto.setName(product.getName());
         productDto.setPrice(product.getPrice());
-
         if (product.getCategory() != null) {
             productDto.setCategoryId(product.getCategory().getCategoryId());
         }
-
-        productDto.setId(product.getProductId());
-
+        
         return productDto;
     }
 
@@ -59,6 +57,13 @@ public class ProductService {
         return productDtos;
     }
 
+    public ProductDto getProductById(int productId) {
+        Product product = productRepo.findById(productId)
+                .orElseThrow(() -> new EntityNotFoundException("Product not found with id " + productId));
+        
+        return getProductDto(product);
+    }
+    
     public void updateProduct(ProductDto productDto, int productId) {
         Product product = productRepo.findById(productId)
                 .orElseThrow(() -> new EntityNotFoundException("Product not found with id " + productId));
@@ -70,5 +75,4 @@ public class ProductService {
     
         productRepo.save(product);
     }
-    
 }

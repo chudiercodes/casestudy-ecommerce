@@ -9,6 +9,7 @@ import lombok.Data;
 public @Data class ApiResponse {
     private final boolean success;
     private final String message;
+    // private ProductDto product;
     
     public String getTimeStamp() {
         return LocalDateTime.now().toString();

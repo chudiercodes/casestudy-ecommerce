@@ -2,6 +2,7 @@ package com.ecommerce.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,5 +38,17 @@ public class ProductServiceTest {
         assertEquals(2, result.size());
         assertEquals("Product 1", result.get(0).getName());
         assertEquals("http://example.com/image2.jpg", result.get(1).getImageUrl());
+    }
+
+    @Test
+    public void testGetProductById() {
+        int productId = 1;
+        Product product = new Product("Product 1", "http://example.com/image1.jpg", 9.99, "Product 1 description");
+        Mockito.when(productRepository.findById(productId)).thenReturn(Optional.of(product));
+
+        ProductDto result = productService.getProductById(productId);
+
+        assertEquals("Product 1", result.getName());
+        assertEquals(9.99, result.getPrice(), 0.001);
     }
 }

@@ -51,8 +51,19 @@ public class ProductController {
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
+    @GetMapping("/{productId}")
+    public ResponseEntity<ProductDto> getProductById(@PathVariable("productId") int productId) {
+        ProductDto product = productService.getProductById(productId);
+        
+        if (product == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        
+        return new ResponseEntity<>(product, HttpStatus.OK);    
+    }
+
     @PutMapping("/update/{productId}")
-    public ResponseEntity<ApiResponse> updateProduct(@PathVariable("productId")Integer productId, @RequestBody ProductDto productDto) {
+    public ResponseEntity<ApiResponse> updateProduct(@PathVariable("productId")int productId, @RequestBody ProductDto productDto) {
         Optional<Category> optionalCategory = categoryRepo.findById(productDto.getCategoryId());
         
         if(!optionalCategory.isPresent()) {
