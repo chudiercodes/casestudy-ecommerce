@@ -18,9 +18,9 @@ public class UserController {
     UserService userService;
 
     @PostMapping("/signup")
-    public ResponseDto addNewUser(@RequestBody SignUpDto signUpDto) {
+    public ResponseDto signUp(@RequestBody SignUpDto signUpDto) {
         System.out.println(signUpDto);
         
-        return userService.addNewUser(signUpDto);
+        return userService.signUp(signUpDto);
     }
 }

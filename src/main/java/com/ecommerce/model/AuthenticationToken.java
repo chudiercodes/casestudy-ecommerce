@@ -1,6 +1,7 @@
 package com.ecommerce.model;
 
-import java.sql.Date;
+import java.util.Date;
+import java.util.UUID;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -28,4 +29,9 @@ public @Data class AuthenticationToken {
     @JoinColumn(nullable = false, name = "user_id")
     private User user;
 
+    public AuthenticationToken(User user) {
+        this.user = user;
+        this.createdDate = new Date();
+        this.token = UUID.randomUUID().toString();
+    }
 } 

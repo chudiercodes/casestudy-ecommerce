@@ -4,6 +4,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
 import javax.xml.bind.DatatypeConverter;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.ecommerce.dto.ResponseDto;
 import com.ecommerce.dto.user.SignUpDto;
+import com.ecommerce.model.AuthenticationToken;
 import com.ecommerce.model.User;
 import com.ecommerce.repository.UserRepo;
 
@@ -20,7 +22,11 @@ public class UserService {
     @Autowired
     UserRepo userRepo;
 
-    public ResponseDto addNewUser(SignUpDto signUpDto) {
+    @Autowired
+    AuthenticationService authService;
+
+    @Transactional
+    public ResponseDto signUp(SignUpDto signUpDto) {
 		Optional<User> userByEmail = userRepo.findUserByEmail(signUpDto.getEmail());
         
 		if(userByEmail.isPresent()) {
@@ -39,8 +45,13 @@ public class UserService {
 
         User user = new User(signUpDto.getFirstName(), signUpDto.getLastName(), signUpDto.getEmail(), encryptedPwd);
         userRepo.save(user);
-        
-        ResponseDto responseDto = new ResponseDto("succes", "demo response");
+
+        final AuthenticationToken authenticationToken = new AuthenticationToken(user);
+
+        //save token
+        authService.saveCofirmationToken(authenticationToken);
+
+        ResponseDto responseDto = new ResponseDto("succes", "user created successfully");
         return responseDto;
 	}
 
@@ -54,5 +65,4 @@ public class UserService {
 
         return hash;
     }
-
 }
