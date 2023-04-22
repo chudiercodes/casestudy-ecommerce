@@ -8,8 +8,10 @@ import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "users")
 public @Data class User {
@@ -23,8 +25,6 @@ public @Data class User {
     private String email;
     private String password;
     
-    public User() {
-    }
 
     public User(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;

@@ -2,8 +2,11 @@ package com.ecommerce.service;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.Optional;
 
+import javax.jws.soap.SOAPBinding.Use;
 import javax.transaction.Transactional;
 import javax.xml.bind.DatatypeConverter;
 
@@ -11,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ecommerce.dto.ResponseDto;
+import com.ecommerce.dto.user.LoginDto;
+import com.ecommerce.dto.user.LoginResponseDto;
 import com.ecommerce.dto.user.SignUpDto;
 import com.ecommerce.model.AuthenticationToken;
 import com.ecommerce.model.User;
@@ -64,5 +69,31 @@ public class UserService {
                 .printHexBinary(digest);
 
         return hash;
+    }
+
+    public LoginResponseDto login(LoginDto loginDto) {
+        
+        Optional<User> userOpt = userRepo.findUserByEmail(loginDto.getEmail());
+
+        User user = userOpt.orElseThrow(() -> new IllegalArgumentException("User does not exist with email " + loginDto.getEmail()));
+
+        //compare pwds
+        try {
+            if (!user.getPassword().equals(hashPwd(loginDto.getPassword()))) {
+                throw new IllegalArgumentException("wrong password");
+            }
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
+        //if pwd matches grab the token of the user
+        Optional<AuthenticationToken> optionalToken = authService.getToken(user);
+        if(!optionalToken.isPresent()) {
+            throw new NoSuchElementException("Token not found for user");
+        }
+        
+        AuthenticationToken token = optionalToken.get();
+
+        return new LoginResponseDto("success", token.getToken());
     }
 }
