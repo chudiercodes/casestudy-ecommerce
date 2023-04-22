@@ -1,4 +1,4 @@
-package com.ecommerce.service;
+package com.ecommerce.serviceTest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +16,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import com.ecommerce.dto.ProductDto;
 import com.ecommerce.model.Product;
 import com.ecommerce.repository.ProductRepo;
+import com.ecommerce.service.ProductService;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ProductServiceTest {
