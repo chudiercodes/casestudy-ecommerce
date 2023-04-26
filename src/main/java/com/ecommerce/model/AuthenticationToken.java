@@ -12,13 +12,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 @Entity
-@NoArgsConstructor
 @Table(name = "tokens")
-public @Data class AuthenticationToken {
+public class AuthenticationToken {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,9 +27,44 @@ public @Data class AuthenticationToken {
     @JoinColumn(nullable = false, name = "user_id")
     private User user;
 
+    public AuthenticationToken() {
+    }
+
     public AuthenticationToken(User user) {
         this.user = user;
         this.createdDate = new Date();
         this.token = UUID.randomUUID().toString();
+    }
+
+    public int getTokenId() {
+        return tokenId;
+    }
+
+    public void setTokenId(int tokenId) {
+        this.tokenId = tokenId;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 } 

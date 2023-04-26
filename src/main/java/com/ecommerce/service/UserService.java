@@ -17,6 +17,7 @@ import com.ecommerce.dto.ResponseDto;
 import com.ecommerce.dto.user.LoginDto;
 import com.ecommerce.dto.user.LoginResponseDto;
 import com.ecommerce.dto.user.SignUpDto;
+import com.ecommerce.exception.AuthenticationFailedException;
 import com.ecommerce.exception.CustomException;
 import com.ecommerce.model.AuthenticationToken;
 import com.ecommerce.model.User;
@@ -76,12 +77,12 @@ public class UserService {
         
         Optional<User> userOpt = userRepo.findUserByEmail(loginDto.getEmail());
 
-        User user = userOpt.orElseThrow(() -> new CustomException("User does not exist with the email " + loginDto.getEmail()));
+        User user = userOpt.orElseThrow(() -> new AuthenticationFailedException("the email or password you entered is incorrect" + loginDto.getEmail()));
 
         //compare pwds
         try {
             if (!user.getPassword().equals(hashPwd(loginDto.getPassword()))) {
-                throw new CustomException("wrong password");
+                throw new AuthenticationFailedException("The email or password you entered is incorrect");
             }
         } catch (NoSuchAlgorithmException e) { 
             e.printStackTrace();
