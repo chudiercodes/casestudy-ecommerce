@@ -2,11 +2,8 @@ package com.ecommerce.service;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.NoSuchElementException;
-import java.util.Objects;
 import java.util.Optional;
 
-import javax.jws.soap.SOAPBinding.Use;
 import javax.transaction.Transactional;
 import javax.xml.bind.DatatypeConverter;
 
