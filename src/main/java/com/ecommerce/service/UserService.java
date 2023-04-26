@@ -17,6 +17,7 @@ import com.ecommerce.dto.ResponseDto;
 import com.ecommerce.dto.user.LoginDto;
 import com.ecommerce.dto.user.LoginResponseDto;
 import com.ecommerce.dto.user.SignUpDto;
+import com.ecommerce.exception.CustomException;
 import com.ecommerce.model.AuthenticationToken;
 import com.ecommerce.model.User;
 import com.ecommerce.repository.UserRepo;
@@ -36,7 +37,7 @@ public class UserService {
         
 		if(userByEmail.isPresent()) {
             User existingUser = userByEmail.get();
-			throw new IllegalStateException("a user already exists with that email:" + existingUser);
+			throw new CustomException("a user already exists with that email: " + existingUser.getEmail());
 		}
 
         //hash pwd
@@ -75,21 +76,21 @@ public class UserService {
         
         Optional<User> userOpt = userRepo.findUserByEmail(loginDto.getEmail());
 
-        User user = userOpt.orElseThrow(() -> new IllegalArgumentException("User does not exist with email " + loginDto.getEmail()));
+        User user = userOpt.orElseThrow(() -> new CustomException("User does not exist with the email " + loginDto.getEmail()));
 
         //compare pwds
         try {
             if (!user.getPassword().equals(hashPwd(loginDto.getPassword()))) {
-                throw new IllegalArgumentException("wrong password");
+                throw new CustomException("wrong password");
             }
-        } catch (NoSuchAlgorithmException e) {
+        } catch (NoSuchAlgorithmException e) { 
             e.printStackTrace();
         }
 
         //if pwd matches grab the token of the user
         Optional<AuthenticationToken> optionalToken = authService.getToken(user);
         if(!optionalToken.isPresent()) {
-            throw new NoSuchElementException("Token not found for user");
+            throw new CustomException("Token not found for user");
         }
         
         AuthenticationToken token = optionalToken.get();

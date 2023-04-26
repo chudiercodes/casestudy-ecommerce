@@ -10,6 +10,7 @@ public class ExceptionAdvice {
     
     @ExceptionHandler(value = CustomException.class)
     public final ResponseEntity<String> handleCustomException(CustomException exception){
+        
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
 }
