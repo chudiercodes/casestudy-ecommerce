@@ -2,16 +2,25 @@ package com.ecommerce.api;
 
 import java.time.LocalDateTime;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-
-@AllArgsConstructor
-public @Data class ApiResponse {
+public class ApiResponse {
     private final boolean success;
     private final String message;
     // private ProductDto product;
-    
+
     public String getTimeStamp() {
         return LocalDateTime.now().toString();
+    }
+
+    public ApiResponse(boolean success, String message) {
+        this.success = success;
+        this.message = message;
+    }
+
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public String getMessage() {
+        return message;
     }
 }
