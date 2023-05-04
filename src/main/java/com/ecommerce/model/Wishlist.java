@@ -12,6 +12,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.ecommerce.dto.ProductDto;
+
 @Entity
 @Table(name = "wishlist")
 public class Wishlist {
@@ -39,6 +41,12 @@ public class Wishlist {
         this.user = user;
         this.createdDate = createdDate;
         this.product = product;
+    }
+
+    public Wishlist(User user, Product product) {
+        this.user = user;
+        this.product = product;
+        this.createdDate = new Date();
     }
 
     public int getId() {

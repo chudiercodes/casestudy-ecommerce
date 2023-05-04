@@ -10,6 +10,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "products")
 public class Product {
@@ -25,6 +27,7 @@ public class Product {
     private @NotNull String description;
     
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "categoryId")
     Category category;
 

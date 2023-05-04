@@ -30,8 +30,8 @@ public class AuthenticationService {
 
         if(!authToken.isPresent()) {
             throw new AuthenticationFailedException("authentication failed");
-        }
-
+        } 
+        
         return authToken.get().getUser();
     }
 
