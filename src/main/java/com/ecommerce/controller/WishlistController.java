@@ -60,6 +60,8 @@ public class WishlistController {
         //find the user
         User user = authService.getUser(token);
 
-        return wishlistService.getWishlistForUser(user);
+        List<ProductDto> wishlistForUser = wishlistService.getWishlistForUser(user);
+
+        return new ResponseEntity<>(wishlistForUser, HttpStatus.OK);
     }
 }
